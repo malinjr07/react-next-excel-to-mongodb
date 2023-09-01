@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const MongoDbUrl = () => {
   const [urlString, setUrlString] = useState('');
@@ -8,7 +9,11 @@ const MongoDbUrl = () => {
   function validateUrl(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (urlString && collection) {
+      toast.success(`All's good`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
       /*
+      `mongodb+srv://Aleam_Hossain:aVai9CjHys8Mebam@cluster0.2qdagfg.mongodb.net`
       Upload Sheet API
       fetch('/api', {
         method: 'post',
@@ -28,8 +33,14 @@ const MongoDbUrl = () => {
           console.error('Error', error);
         }); */
     } else if (!urlString) {
+      toast.error('No MongoDB URL was Found!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.error('No MongoDB URL was Found!');
     } else if (!collection) {
+      toast.error('No Collection Name was Found!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.error('No Collection Name was Found!');
     } else {
       return false;
@@ -54,7 +65,7 @@ const MongoDbUrl = () => {
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setUrlString(e.target.value);
             }}
-            required
+            // required
             className='px-6 py-4 rounded-xl border border-[#E6E6E6] border-r-transparent w-full resize-none '
             cols={30}
             rows={10}
@@ -79,7 +90,7 @@ const MongoDbUrl = () => {
             type='text'
             name=''
             id='collection'
-            required
+            // required
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setCollection(e.target.value);
             }}
